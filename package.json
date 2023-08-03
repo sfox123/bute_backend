@@ -1,0 +1,22 @@
+{
+  "name": "bute-backend",
+  "version": "1.0.0",
+  "description": "construction website",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sfox123/bute_backend.git"
+  },
+  "author": "shagar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sfox123/bute_backend/issues"
+  },
+  "homepage": "https://github.com/sfox123/bute_backend#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
