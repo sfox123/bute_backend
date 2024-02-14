@@ -91,7 +91,11 @@ app.post("/mail", async (req, res) => {
     });
     const Companydata = await resend.emails.send({
       from: "info@buteconstruction.co.uk",
-      to: ["saravanagobi@buteconstruction.co.uk"],
+      to: [
+        "saravanagobi@buteconstruction.co.uk",
+        "aravin.kalu@buteconstruction.co.uk",
+        "bute.tudorel@buteconstruction.co.uk",
+      ],
       subject: `Request#${id}`,
       html: html(fullname, email, number, query, ip),
     });
