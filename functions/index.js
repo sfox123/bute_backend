@@ -23,7 +23,7 @@ app.use(cors({ origin: true }));
 admin.initializeApp(functions.config().firebase);
 
 const resend = new Resend("re_WSFAmrSj_PJMGBYQDuHtVrkPy2zzsNU7S");
-const cresend = new Resend("re_GJqnV3Y5_GrBPksovRurHVLpx2o1rpWzU");
+const cresend = new Resend("re_4XaBwY9F_9iiGLcSj1FG4Jri52ymbQPwi");
 
 app.get("/", (req, res) => {
   res.send("!!! BACKEND !!!");
@@ -111,14 +111,14 @@ app.post("/cMail", async (req, res) => {
   let ip = (req.headers["x-forwarded-for"] || "").split(",")[0];
   try {
     const ClientData = await cresend.emails.send({
-      from: "shagar@creativesquare.net",
+      from: "info@sharasolutions.co.uk",
       to: email,
-      subject: "cquare-noreply",
+      subject: "shara-noreply",
       html: creply(name),
     });
     const Companydata = await cresend.emails.send({
-      from: "shagar@creativesquare.net",
-      to: ["saran@creativesquare.net"],
+      from: "info@sharasolutions.co.uk",
+      to: ["saran@creativesquare.net", "shagar@creativesquare.net"],
       subject: `Request#${id}`,
       html: chtml(name, email, message),
     });
