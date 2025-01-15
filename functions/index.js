@@ -12,7 +12,9 @@ const html = require("./html");
 const chtml = require("./chtml");
 const client = require("./reply");
 const creply = require("./creply");
-const { Resend } = require("resend"); // You should import Resend from "resend" if you haven't already.
+const yslReply = require('./yslReplay')
+const yslHtml = require("./yslHtml");
+const { Resend } = require("resend");
 const app = express();
 const id = crypto.randomBytes(6).toString("hex");
 
@@ -24,6 +26,7 @@ admin.initializeApp(functions.config().firebase);
 
 const resend = new Resend("re_WSFAmrSj_PJMGBYQDuHtVrkPy2zzsNU7S");
 const cresend = new Resend("re_4XaBwY9F_9iiGLcSj1FG4Jri52ymbQPwi");
+const ysl = new Resend('re_h7Yc8DGA_6prDJ2PnF3hWY74mNr3oh34S');
 
 app.get("/", (req, res) => {
   res.send("!!! BACKEND !!!");
@@ -125,6 +128,51 @@ app.post("/cMail", async (req, res) => {
     res.status(200).send({ Companydata });
   } catch (error) {
     res.status(500).json({ error });
+  }
+});
+
+app.post("/ysl", async (req, res) => {
+  const { name, email, number, msg } = req.body;
+  try {
+    const ClientData = await ysl.emails.send({
+      from: "info@yslcivilsltd.co.uk",
+      to: email,
+      subject: "ysl-noreply",
+      html: yslReply(name),
+    });
+    const Companydata = await ysl.emails.send({
+      from: "info@yslcivilsltd.co.uk",
+      to: ["info@yslcivilsltd.co.uk"],
+      subject: `Request#${id}`,
+      html: yslHtml(name, email, number, msg),
+    });
+    res.status(200).json({ Companydata });
+  } catch (error) {
+    res.status(500).json({ error });
+    console.log(error)
+  }
+});
+
+app.post("/yslEmail", async (req, res) => {
+  const { email } = req.body;
+  console.log(email)
+  try {
+    const ClientData = await ysl.emails.send({
+      from: "info@yslcivilsltd.co.uk",
+      to: email,
+      subject: "ysl-noreply",
+      html: yslReply(email.split('@')[0]),
+    });
+    const Companydata = await ysl.emails.send({
+      from: "info@yslcivilsltd.co.uk",
+      to: ["info@yslcivilsltd.co.uk"],
+      subject: `Request#${id}`,
+      html: yslHtml(email.split('@')[0], email, '00000000000', 'No Message'),
+    });
+    res.status(200).json({ Companydata });
+  } catch (error) {
+    res.status(500).json({ error });
+    console.log(error)
   }
 });
 
